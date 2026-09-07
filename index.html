@@ -507,8 +507,8 @@
       <article class="map-card">
         <div class="map-head">
           <div>
-            <h2>Карта решений до Термеза</h2>
-            <p>Дистанции вынесены внутрь карты отдельными плашками, чтобы не уезжали на границы схемы.</p>
+            <h2>Карта маршрута до Янгона</h2>
+            <p>Дистанции вынесены внутрь карты отдельными плашками. Южный участок добавлен для отправки клиенту.</p>
           </div>
           <div class="legend" aria-label="Легенда">
             <span><i class="dot amber"></i>запасная</span>
@@ -530,7 +530,8 @@
           <div class="field">
             <label for="route">Вариант</label>
             <select id="route">
-              <option value="saratov_direct" selected>Начальная точка - Дубки - Гагарин</option>
+              <option value="client_full" selected>Полный маршрут до Янгона</option>
+              <option value="saratov_direct">До Термеза без Шалкара</option>
               <option value="saratov_shalkar">Шалкар как разбивка</option>
             </select>
           </div>
@@ -563,7 +564,7 @@
             <li><b>1</b><span>Начальная точка - Дубки: подтвердить фактический аэродром вылета, остаток топлива и первый перелёт.</span></li>
             <li><b>2</b><span>Саратов Гагарин: использовать как точку таможни, гостиницы и вылета на Актобе.</span></li>
             <li><b>3</b><span>Шалкар: держать как промежуточную посадку только если плечо Актобе - Кызылорда нельзя принять напрямую.</span></li>
-            <li><b>4</b><span>Шымкент, Ташкент, Самарканд, Термез: в процессе проработки по топливу, стоянке, разрешениям и дальнейшему выходу.</span></li>
+            <li><b>4</b><span>ISB, AMD, BBI, RGN: иностранный участок добавлен в схему; плечи и разрешения требуют отдельного подтверждения.</span></li>
           </ol>
         </section>
       </aside>
@@ -587,7 +588,7 @@
     </section>
 
     <footer>
-      Расстояния расчетные, по дуге между координатами, не являются утвержденной трассой или полетным планом. Ближние точки Саратов / Дубки / Гагарин разведены на экране только для читаемости; километраж считается по координатам. Источники: вводные пользователя, официальный сайт аэропорта Гагарин, AIP Казахстана и открытые справочники для Дубки/Шалкар.
+      Расстояния расчетные, по дуге между координатами, не являются утвержденной трассой или полетным планом. Ближние точки Саратов / Дубки / Гагарин разведены на экране только для читаемости; километраж считается по координатам. Иностранные точки добавлены как рабочая клиентская схема: ISB, AMD, BBI, RGN.
     </footer>
   </main>
 
@@ -612,13 +613,14 @@
       bukhara: { name: "Бухара", code: "BHK / UZSB", country: "Узбекистан", lat: 39.775, lon: 64.483, status: "критично", action: "подтвердить как рабочую разбивку перед Термезом", fuel: "нужный бензин не подтверждён" },
       nukus: { name: "Нукус", code: "NCU / UZNN", country: "Узбекистан", lat: 42.4892, lon: 59.6227, status: "проверить", action: "держать как северную альтернативу", fuel: "нужный бензин не подтверждён" },
       termez: { name: "Термез", code: "TMJ / UZST", country: "Узбекистан", lat: 37.2867, lon: 67.31, status: "в процессе", action: "в процессе проработки: топливо, граница и дальнейший FIR/Афганистан", fuel: "нужный бензин не подтверждён" },
-      islamabad: { name: "Исламабад", code: "ISB / OPIS", country: "Пакистан", lat: 33.55, lon: 72.8, status: "южный участок", action: "Дубайский офис", fuel: "не в текущей зоне карты" },
-      lucknow: { name: "Лакхнау", code: "LKO / VILK", country: "Индия", lat: 26.8, lon: 80.9, status: "южный участок", action: "Дубайский офис", fuel: "не в текущей зоне карты" },
-      kolkata: { name: "Калькутта", code: "CCU / VECC", country: "Индия", lat: 22.65, lon: 88.45, status: "южный участок", action: "Дубайский офис", fuel: "не в текущей зоне карты" },
-      yangon: { name: "Янгон", code: "RGN / VYYY", country: "Мьянма", lat: 16.9, lon: 96.13, status: "прибытие", action: "предоплачено, не дублировать расходы", fuel: "прибытие" }
+      islamabad: { name: "Исламабад", code: "ISB / OPIS", country: "Пакистан", lat: 33.55, lon: 72.8, status: "в процессе", action: "в процессе проработки: разрешения, handling и топливо", fuel: "не подтверждено" },
+      ahmedabad: { name: "Ахмедабад", code: "AMD / VAAH", country: "Индия", lat: 23.0772, lon: 72.6347, status: "в процессе", action: "в процессе проработки: разрешения, handling и топливо", fuel: "не подтверждено" },
+      bhubaneswar: { name: "Бхубанешвар", code: "BBI / VEBS", country: "Индия", lat: 20.2444, lon: 85.8178, status: "в процессе", action: "в процессе проработки: разрешения, handling и топливо", fuel: "не подтверждено" },
+      yangon: { name: "Янгон", code: "RGN / VYYY", country: "Мьянма", lat: 16.9073, lon: 96.1332, status: "прибытие", action: "точка прибытия; расходы не дублировать, если уже предоплачено", fuel: "прибытие" }
     };
 
     const routes = {
+      client_full: ["chernoe", "dubki", "gagarin", "aktobe", "kyzylorda", "shymkent", "tashkent", "samarkand", "termez", "islamabad", "ahmedabad", "bhubaneswar", "yangon"],
       saratov_direct: ["chernoe", "dubki", "gagarin", "aktobe", "kyzylorda", "shymkent", "tashkent", "samarkand", "termez"],
       saratov_shalkar: ["chernoe", "dubki", "gagarin", "aktobe", "shalkar", "kyzylorda", "shymkent", "tashkent", "samarkand", "termez"]
     };
@@ -763,14 +765,16 @@
         samarkand: [-168, 54],
         bukhara: [-164, -96],
         termez: [30, 52],
+        islamabad: [26, -74],
+        ahmedabad: [-160, 44],
+        bhubaneswar: [-174, -80],
+        yangon: [-130, 26],
         balapan: [18, -74],
         zhezkazgan: [-150, -72],
         taraz: [18, 30],
         nukus: [-150, -74],
-        islamabad: [18, -74],
         lucknow: [18, 28],
-        kolkata: [-150, -74],
-        yangon: [-130, 26]
+        kolkata: [-150, -74]
       }[point.id] || [index % 2 ? -132 : 24, index % 3 ? -72 : 30];
       const width = labelBoxWidth(point);
       const height = 44;
@@ -806,6 +810,28 @@
       const height = 30;
       const mx = (a.x + b.x) / 2;
       const my = (a.y + b.y) / 2;
+      if (routeSelect.value === "client_full") {
+        const manual = [
+          [12, -38],
+          [-76, 58],
+          [-18, -48],
+          [22, 54],
+          [28, 34],
+          [52, 0],
+          [56, 26],
+          [-22, 48],
+          [0, -58],
+          [-46, 42],
+          [0, 46],
+          [-40, -48]
+        ][index] || [0, 42];
+        return {
+          x: Math.max(16, Math.min(1120 - width - 16, mx + manual[0] - width / 2)),
+          y: Math.max(16, Math.min(700 - height - 16, my + manual[1] - height / 2)),
+          width,
+          height
+        };
+      }
       const dx = b.x - a.x;
       const dy = b.y - a.y;
       const len = Math.max(1, Math.hypot(dx, dy));
