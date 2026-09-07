@@ -163,8 +163,8 @@
     #map {
       display: block;
       width: 100%;
-      height: min(80vh, 860px);
-      min-height: 700px;
+      height: auto;
+      aspect-ratio: 1120 / 700;
       touch-action: manipulation;
     }
 
@@ -240,9 +240,16 @@
     }
 
     .leader {
-      stroke: rgba(18, 35, 38, .35);
+      stroke: rgba(18, 35, 38, .52);
+      stroke-width: 1.35;
+      stroke-dasharray: 3 3;
+      pointer-events: none;
+    }
+
+    .distance-leader {
+      stroke: rgba(29, 93, 122, .48);
       stroke-width: 1.2;
-      stroke-dasharray: 3 4;
+      pointer-events: none;
     }
 
     .distance-box {
@@ -260,6 +267,50 @@
       dominant-baseline: middle;
       font-variant-numeric: tabular-nums;
     }
+
+    .inset-panel {
+      fill: rgba(255, 253, 246, .94);
+      stroke: rgba(23, 59, 63, .22);
+      stroke-width: 1;
+      filter: drop-shadow(0 8px 16px rgba(18, 35, 38, .12));
+    }
+
+    .inset-title {
+      fill: var(--ink);
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .inset-label {
+      fill: var(--ink);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .inset-distance {
+      fill: var(--blue);
+      font-size: 11px;
+      font-weight: 850;
+      text-anchor: middle;
+    }
+
+    .inset-line {
+      stroke: rgba(29, 93, 122, .55);
+      stroke-width: 1.4;
+    }
+
+    .inset-dot {
+      fill: #fff;
+      stroke: var(--blue);
+      stroke-width: 2.4;
+    }
+
+    .inset-dot.city {
+      stroke: #607175;
+      stroke-width: 1.8;
+    }
+
+    .map-inset { pointer-events: none; }
 
     .callout {
       padding: 14px 16px;
@@ -485,8 +536,8 @@
       .shell { width: min(100vw - 22px, 760px); padding-top: 14px; }
       .topbar, .layout, .map-head { grid-template-columns: 1fr; }
       .stamp { text-align: left; }
-      .map-wrap { min-height: 500px; }
-      #map { height: 640px; min-height: 560px; }
+      .map-wrap { min-height: 0; }
+      #map { height: auto; min-height: 0; }
       .metrics { grid-template-columns: 1fr; }
       .legend { justify-content: flex-start; }
       .detail div { grid-template-columns: 1fr; gap: 2px; }
@@ -498,7 +549,7 @@
     <section class="topbar">
       <div>
         <h1>Ан-2 RA-01439: топливная карта маршрута</h1>
-        <p class="lead">Обновлено под схему из начальной точки через Дубки и Саратов: Дубки, город Саратов и аэропорт Гагарин показаны отдельными точками, Гагарин отмечен как таможня, гостиница и вылет на Актобе. Шалкар оставлен только как запасной вариант при необходимости разбить плечо Актобе - Кызылорда.</p>
+        <p class="lead">Маршрут начинается на аэродроме Чёрное в Московской области. Москва показана отдельным ориентиром западнее аэродрома; далее идут Дубки, Гагарин, Казахстан, Узбекистан, Пакистан, Индия и Янгон.</p>
       </div>
       <div class="stamp">Срез 07.09.2026<br>Excel не изменялся</div>
     </section>
@@ -508,7 +559,7 @@
         <div class="map-head">
           <div>
             <h2>Карта маршрута до Янгона</h2>
-            <p>Дистанции вынесены внутрь карты отдельными плашками. Южный участок добавлен для отправки клиенту.</p>
+            <p>Все точки стоят на фактических координатах. Подписи и километраж соединены со своими точками; близкие узлы показаны с увеличением.</p>
           </div>
           <div class="legend" aria-label="Легенда">
             <span><i class="dot amber"></i>запасная</span>
@@ -519,10 +570,10 @@
         <div class="map-wrap">
           <svg id="map" viewBox="0 0 1120 700" role="img" aria-labelledby="mapTitle mapDesc">
             <title id="mapTitle">Карта маршрута Ан-2</title>
-            <desc id="mapDesc">Интерактивная карта маршрута из Саратова через Гагарин, Актобе, Кызылорду, Шымкент, Ташкент, Самарканд и Термез.</desc>
+            <desc id="mapDesc">Интерактивная карта маршрута от аэродрома Чёрное через Дубки, Гагарин, Актобе, Кызылорду, Шымкент, Ташкент, Самарканд, Термез, Исламабад, Ахмедабад и Бхубанешвар до Янгона.</desc>
           </svg>
         </div>
-        <div class="callout">Саратов Гагарин: есть гостиницы рядом с аэропортом и таможенный контроль. Плановая логика участка: Дубки - Гагарин, затем перелёт Гагарин - Актобе. Ближние саратовские точки разведены визуально, чтобы был виден короткий перелёт.</div>
+        <div class="callout">Москва показана западнее аэродрома Чёрное, как на местности. Саратов, Дубки и Гагарин также стоят на своих координатах; линии от подписей указывают точную точку.</div>
       </article>
 
       <aside>
@@ -561,7 +612,7 @@
         <section class="side-card timeline">
           <h2>Что делать сейчас</h2>
           <ol>
-            <li><b>1</b><span>Начальная точка - Дубки: подтвердить фактический аэродром вылета, остаток топлива и первый перелёт.</span></li>
+            <li><b>1</b><span>Чёрное / МАРЗ - Дубки: подтвердить аэродром вылета, остаток топлива и первый перелёт.</span></li>
             <li><b>2</b><span>Саратов Гагарин: использовать как точку таможни, гостиницы и вылета на Актобе.</span></li>
             <li><b>3</b><span>Шалкар: держать как промежуточную посадку только если плечо Актобе - Кызылорда нельзя принять напрямую.</span></li>
             <li><b>4</b><span>ISB, AMD, BBI, RGN: иностранный участок добавлен в схему; плечи и разрешения требуют отдельного подтверждения.</span></li>
@@ -588,7 +639,7 @@
     </section>
 
     <footer>
-      Расстояния расчетные, по дуге между координатами, не являются утвержденной трассой или полетным планом. Ближние точки Саратов / Дубки / Гагарин разведены на экране только для читаемости; километраж считается по координатам. Иностранные точки добавлены как рабочая клиентская схема: ISB, AMD, BBI, RGN.
+      Расстояния расчетные, по дуге между координатами аэродромов, и не являются утвержденной трассой или полетным планом. Точки не смещаются ради оформления: Москва, Чёрное, Саратов, Дубки и Гагарин показаны в фактическом взаимном положении. Подпись соединена линией именно со своей точкой.
     </footer>
   </main>
 
@@ -597,14 +648,15 @@
     const coreCountries = new Set(["RUS", "KAZ", "UZB"]);
     const riskCountries = new Set(["AFG", "PAK", "IND", "BGD", "MMR"]);
     const airports = {
-      chernoe: { name: "Начальная точка", code: "Чёрное / МАРЗ", country: "Россия", lat: 55.75, lon: 38.05, status: "проверить", action: "подтвердить фактический аэродром вылета и остаток топлива перед Дубками", fuel: "остаток и первый участок уточнить" },
+      moscow: { name: "Москва", code: "город", country: "Россия", lat: 55.7558, lon: 37.6173, status: "ориентир", action: "географический ориентир западнее аэродрома Чёрное", fuel: "не аэропорт" },
+      chernoe: { name: "Чёрное / МАРЗ", code: "XUMH · Московская обл.", country: "Россия", lat: 55.76056, lon: 38.06361, status: "проверить", action: "подтвердить фактический аэродром вылета и остаток топлива перед Дубками", fuel: "остаток и первый участок уточнить" },
       saratovCity: { name: "Саратов", code: "город", country: "Россия", lat: 51.5336, lon: 46.0343, status: "ориентир", action: "городская привязка рядом с Дубками и Гагариным", fuel: "не аэропорт" },
-      dubki: { name: "Дубки", code: "XWSD", country: "Россия", lat: 51.64345, lon: 46.06457, status: "кандидат", action: "подтвердить посадку в Дубках; далее короткий перелёт на Гагарин", fuel: "возможность топлива не подтверждена" },
-      gagarin: { name: "Гагарин", code: "GSV / UWSG", country: "Россия", lat: 51.71278, lon: 46.17111, status: "таможня", action: "гостиница, таможня и перелёт в Актобе", fuel: "точка выхода; объём уточняет КВС" },
-      aktobe: { name: "Актобе", code: "AKX / UATT", country: "Казахстан", lat: 50.2461, lon: 57.2056, status: "критично", action: "получить официальный ответ по бензину/бочкам/самозаправке", fuel: "AVGAS/АИ-95 не подтверждены" },
+      dubki: { name: "Дубки", code: "XWSD", country: "Россия", lat: 51.649658, lon: 46.05755, status: "кандидат", action: "подтвердить посадку в Дубках; далее короткий перелёт на Гагарин", fuel: "возможность топлива не подтверждена" },
+      gagarin: { name: "Гагарин", code: "GSV / UWSG", country: "Россия", lat: 51.71802, lon: 46.169983, status: "таможня", action: "гостиница, таможня и перелёт в Актобе", fuel: "точка выхода; объём уточняет КВС" },
+      aktobe: { name: "Актобе", code: "AKX / UATT", country: "Казахстан", lat: 50.248116, lon: 57.204144, status: "критично", action: "получить официальный ответ по бензину/бочкам/самозаправке", fuel: "AVGAS/АИ-95 не подтверждены" },
       shalkar: { name: "Шалкар", code: "UATR", country: "Казахстан", lat: 47.905, lon: 59.62, status: "резерв", action: "промежуточная посадка только если Актобе - Кызылорда нужно разбить", fuel: "публичного подтверждения бензина нет" },
-      kyzylorda: { name: "Кызылорда", code: "KZO / UAOO", country: "Казахстан", lat: 44.7064, lon: 65.5908, status: "критично", action: "запросить доставку бензина и порядок стоянки", fuel: "AVGAS/АИ-95 не указан" },
-      shymkent: { name: "Шымкент", code: "CIT / UAII", country: "Казахстан", lat: 42.365, lon: 69.4756, status: "в процессе", action: "в процессе проработки: fuel team, handling и выход в Узбекистан", fuel: "AVGAS/АИ-95 не указан" },
+      kyzylorda: { name: "Кызылорда", code: "KZO / UAOO", country: "Казахстан", lat: 44.706902, lon: 65.592499, status: "критично", action: "запросить доставку бензина и порядок стоянки", fuel: "AVGAS/АИ-95 не указан" },
+      shymkent: { name: "Шымкент", code: "CIT / UAII", country: "Казахстан", lat: 42.365021, lon: 69.47564, status: "в процессе", action: "в процессе проработки: fuel team, handling и выход в Узбекистан", fuel: "AVGAS/АИ-95 не указан" },
       balapan: { name: "Балапан", code: "UAKB", country: "Казахстан", lat: 49.7294, lon: 73.3008, status: "критично", action: "подтвердить приём, топливо, правила и смысл включения", fuel: "топливо не подтверждено" },
       zhezkazgan: { name: "Жезказган", code: "DZN / UAKD", country: "Казахстан", lat: 47.7092, lon: 67.7383, status: "проверить", action: "проверить как разбивку к Балапана", fuel: "AVGAS/АИ-95 не указан" },
       taraz: { name: "Тараз", code: "DMB / UADD", country: "Казахстан", lat: 42.8544, lon: 71.3022, status: "проверить", action: "проверить как разбивку Балапан - Узбекистан", fuel: "AVGAS/АИ-95 не указан" },
@@ -613,9 +665,9 @@
       bukhara: { name: "Бухара", code: "BHK / UZSB", country: "Узбекистан", lat: 39.775, lon: 64.483, status: "критично", action: "подтвердить как рабочую разбивку перед Термезом", fuel: "нужный бензин не подтверждён" },
       nukus: { name: "Нукус", code: "NCU / UZNN", country: "Узбекистан", lat: 42.4892, lon: 59.6227, status: "проверить", action: "держать как северную альтернативу", fuel: "нужный бензин не подтверждён" },
       termez: { name: "Термез", code: "TMJ / UZST", country: "Узбекистан", lat: 37.2867, lon: 67.31, status: "в процессе", action: "в процессе проработки: топливо, граница и дальнейший FIR/Афганистан", fuel: "нужный бензин не подтверждён" },
-      islamabad: { name: "Исламабад", code: "ISB / OPIS", country: "Пакистан", lat: 33.55, lon: 72.8, status: "в процессе", action: "в процессе проработки: разрешения, handling и топливо", fuel: "не подтверждено" },
+      islamabad: { name: "Исламабад", code: "ISB / OPIS", country: "Пакистан", lat: 33.549, lon: 72.82566, status: "в процессе", action: "в процессе проработки: разрешения, handling и топливо", fuel: "не подтверждено" },
       ahmedabad: { name: "Ахмедабад", code: "AMD / VAAH", country: "Индия", lat: 23.0772, lon: 72.6347, status: "в процессе", action: "в процессе проработки: разрешения, handling и топливо", fuel: "не подтверждено" },
-      bhubaneswar: { name: "Бхубанешвар", code: "BBI / VEBS", country: "Индия", lat: 20.2444, lon: 85.8178, status: "в процессе", action: "в процессе проработки: разрешения, handling и топливо", fuel: "не подтверждено" },
+      bhubaneswar: { name: "Бхубанешвар", code: "BBI / VEBS", country: "Индия", lat: 20.246667, lon: 85.818611, status: "в процессе", action: "в процессе проработки: разрешения, handling и топливо", fuel: "не подтверждено" },
       yangon: { name: "Янгон", code: "RGN / VYYY", country: "Мьянма", lat: 16.9073, lon: 96.1332, status: "прибытие", action: "точка прибытия; расходы не дублировать, если уже предоплачено", fuel: "прибытие" }
     };
 
@@ -625,7 +677,7 @@
       saratov_shalkar: ["chernoe", "dubki", "gagarin", "aktobe", "shalkar", "kyzylorda", "shymkent", "tashkent", "samarkand", "termez"]
     };
 
-    const standalone = ["saratovCity", "shalkar"];
+    const standalone = ["moscow", "saratovCity", "shalkar"];
     const fmt = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 });
     const svg = document.getElementById("map");
     const routeSelect = document.getElementById("route");
@@ -637,6 +689,7 @@
     let selectedPoint = "gagarin";
     let selectedLeg = 0;
     let occupiedBoxes = [];
+    let routeSegments = [];
 
     function haversine(a, b) {
       const R = 6371;
@@ -709,16 +762,38 @@
       return node;
     }
 
-    function visualOffset(point) {
-      return {
-        saratovCity: [-14, 20],
-        dubki: [-12, -16],
-        gagarin: [28, -8]
-      }[point.id] || [0, 0];
+    function insetText(group, text, className, x, y) {
+      const node = el("text", { class: className, x, y });
+      node.textContent = text;
+      group.appendChild(node);
+    }
+
+    function drawCloseupInset() {
+      const group = el("g", { class: "map-inset" });
+      group.appendChild(el("rect", { class: "inset-panel", x: 760, y: 22, width: 340, height: 164, rx: 8 }));
+      insetText(group, "Увеличение близких точек", "inset-title", 776, 43);
+
+      group.appendChild(el("line", { class: "inset-line", x1: 806, y1: 78, x2: 958, y2: 76 }));
+      group.appendChild(el("circle", { class: "inset-dot city", cx: 806, cy: 78, r: 5 }));
+      group.appendChild(el("circle", { class: "inset-dot", cx: 958, cy: 76, r: 6 }));
+      insetText(group, "Москва", "inset-label", 776, 66);
+      insetText(group, "Чёрное / МАРЗ", "inset-label", 970, 80);
+      insetText(group, "28 км", "inset-distance", 882, 69);
+
+      group.appendChild(el("line", { class: "inset-line", x1: 800, y1: 148, x2: 873, y2: 128 }));
+      group.appendChild(el("line", { class: "inset-line", x1: 873, y1: 128, x2: 1010, y2: 105 }));
+      group.appendChild(el("circle", { class: "inset-dot city", cx: 800, cy: 148, r: 4.5 }));
+      group.appendChild(el("circle", { class: "inset-dot", cx: 873, cy: 128, r: 5 }));
+      group.appendChild(el("circle", { class: "inset-dot", cx: 1010, cy: 105, r: 5 }));
+      insetText(group, "Саратов", "inset-label", 776, 169);
+      insetText(group, "Дубки", "inset-label", 850, 117);
+      insetText(group, "Гагарин", "inset-label", 1020, 108);
+      insetText(group, "11 км", "inset-distance", 942, 126);
+      svg.appendChild(group);
     }
 
     function labelBoxWidth(point) {
-      return Math.max(92, Math.min(186, point.name.length * 8 + 38));
+      return Math.max(92, Math.min(206, Math.max(point.name.length * 8 + 38, point.code.length * 6.5 + 24)));
     }
 
     function clampBox(box) {
@@ -738,65 +813,108 @@
       return box;
     }
 
-    function chooseClearBox(candidates, fallback) {
-      for (const candidate of candidates.map(clampBox)) {
-        if (!occupiedBoxes.some((box) => overlaps(candidate, box))) return reserveBox(candidate);
-      }
-      const base = clampBox(fallback);
-      for (let step = 1; step <= 8; step++) {
-        for (const dy of [-1, 1]) {
-          const shifted = clampBox({ ...base, y: base.y + dy * step * 38 });
-          if (!occupiedBoxes.some((box) => overlaps(shifted, box))) return reserveBox(shifted);
-        }
-      }
-      return reserveBox(base);
+    function segmentsIntersect(a, b, c, d) {
+      const cross = (p, q, r) => (q.x - p.x) * (r.y - p.y) - (q.y - p.y) * (r.x - p.x);
+      const abC = cross(a, b, c);
+      const abD = cross(a, b, d);
+      const cdA = cross(c, d, a);
+      const cdB = cross(c, d, b);
+      return ((abC === 0 || abD === 0 || Math.sign(abC) !== Math.sign(abD)) &&
+        (cdA === 0 || cdB === 0 || Math.sign(cdA) !== Math.sign(cdB)));
     }
 
-    function labelAnchor(point, x, y, index) {
-      const manual = {
-        saratovCity: [-120, 36],
-        dubki: [-132, -84],
-        gagarin: [34, -74],
-        aktobe: [30, -76],
-        shalkar: [-150, 44],
-        kyzylorda: [-150, -92],
-        shymkent: [28, 58],
-        tashkent: [32, -100],
-        samarkand: [-168, 54],
-        bukhara: [-164, -96],
-        termez: [30, 52],
-        islamabad: [26, -74],
-        ahmedabad: [-160, 44],
-        bhubaneswar: [-174, -80],
-        yangon: [-130, 26],
-        balapan: [18, -74],
-        zhezkazgan: [-150, -72],
-        taraz: [18, 30],
-        nukus: [-150, -74],
-        lucknow: [18, 28],
-        kolkata: [-150, -74]
-      }[point.id] || [index % 2 ? -132 : 24, index % 3 ? -72 : 30];
+    function routeCrossesBox(box, pad = 6) {
+      const left = box.x - pad;
+      const right = box.x + box.width + pad;
+      const top = box.y - pad;
+      const bottom = box.y + box.height + pad;
+      const edges = [
+        [{ x: left, y: top }, { x: right, y: top }],
+        [{ x: right, y: top }, { x: right, y: bottom }],
+        [{ x: right, y: bottom }, { x: left, y: bottom }],
+        [{ x: left, y: bottom }, { x: left, y: top }]
+      ];
+      return routeSegments.some(([a, b]) => {
+        const inside = (p) => p.x >= left && p.x <= right && p.y >= top && p.y <= bottom;
+        return inside(a) || inside(b) || edges.some(([c, d]) => segmentsIntersect(a, b, c, d));
+      });
+    }
+
+    function overlapArea(a, b, margin = 10) {
+      const width = Math.max(0, Math.min(a.x + a.width + margin, b.x + b.width + margin) - Math.max(a.x - margin, b.x - margin));
+      const height = Math.max(0, Math.min(a.y + a.height + margin, b.y + b.height + margin) - Math.max(a.y - margin, b.y - margin));
+      return width * height;
+    }
+
+    function chooseClearBox(candidates, fallback, options = {}) {
+      const unique = [];
+      const seen = new Set();
+      for (const raw of [...candidates, fallback]) {
+        const candidate = clampBox(raw);
+        const key = Math.round(candidate.x) + ":" + Math.round(candidate.y) + ":" + candidate.width + ":" + candidate.height;
+        if (!seen.has(key)) {
+          seen.add(key);
+          unique.push(candidate);
+        }
+      }
+      for (const candidate of unique) {
+        const clearOfBoxes = !occupiedBoxes.some((box) => overlaps(candidate, box));
+        const clearOfRoute = !options.avoidRoute || !routeCrossesBox(candidate);
+        if (clearOfBoxes && clearOfRoute) return reserveBox(candidate);
+      }
+      const scored = unique.map((candidate) => ({
+        candidate,
+        score: occupiedBoxes.reduce((sum, box) => sum + overlapArea(candidate, box), 0) +
+          (options.avoidRoute && routeCrossesBox(candidate) ? 100000 : 0)
+      })).sort((a, b) => a.score - b.score);
+      return reserveBox(scored[0].candidate);
+    }
+
+    function labelAnchor(point, x, y) {
       const width = labelBoxWidth(point);
       const height = 44;
-      const offsets = [
-        manual,
-        [24, -112],
-        [24, 58],
-        [-width - 24, -112],
-        [-width - 24, 58],
-        [32, -28],
-        [-width - 32, -28],
-        [-width / 2, -126],
-        [-width / 2, 72]
+      const preferred = {
+        moscow: "left", chernoe: "right", saratovCity: "left", dubki: "topLeft", gagarin: "topRight",
+        aktobe: "topRight", shalkar: "left", kyzylorda: "topLeft", shymkent: "bottomRight",
+        tashkent: "topRight", samarkand: "bottomLeft", bukhara: "left", termez: "bottomRight",
+        islamabad: "right", ahmedabad: "bottomLeft", bhubaneswar: "topRight", yangon: "bottomLeft"
+      }[point.id] || "right";
+      const position = (direction, gap) => ({
+        right: { x: x + gap, y: y - height / 2, width, height },
+        left: { x: x - width - gap, y: y - height / 2, width, height },
+        top: { x: x - width / 2, y: y - height - gap, width, height },
+        bottom: { x: x - width / 2, y: y + gap, width, height },
+        topRight: { x: x + gap, y: y - height - gap, width, height },
+        topLeft: { x: x - width - gap, y: y - height - gap, width, height },
+        bottomRight: { x: x + gap, y: y + gap, width, height },
+        bottomLeft: { x: x - width - gap, y: y + gap, width, height }
+      }[direction]);
+      const directions = [preferred, "right", "left", "top", "bottom", "topRight", "topLeft", "bottomRight", "bottomLeft"];
+      const candidates = [];
+      for (const gap of [18, 34, 54, 78, 108, 140]) {
+        for (const direction of [...new Set(directions)]) candidates.push(position(direction, gap));
+      }
+      return chooseClearBox(candidates, position(preferred, 18), { avoidRoute: true });
+    }
+
+    function nearestPointOnBox(x, y, box) {
+      const clampedX = Math.max(box.x, Math.min(box.x + box.width, x));
+      const clampedY = Math.max(box.y, Math.min(box.y + box.height, y));
+      if (x < box.x || x > box.x + box.width || y < box.y || y > box.y + box.height) {
+        return { x: clampedX, y: clampedY };
+      }
+      const sides = [
+        { x: box.x, y }, { x: box.x + box.width, y },
+        { x, y: box.y }, { x, y: box.y + box.height }
       ];
-      const candidates = offsets.map(([dx, dy]) => ({ x: x + dx, y: y + dy, width, height }));
-      return chooseClearBox(candidates, { x: x + manual[0], y: y + manual[1], width, height });
+      return sides.sort((a, b) => Math.hypot(a.x - x, a.y - y) - Math.hypot(b.x - x, b.y - y))[0];
     }
 
     function drawLabel(point, x, y, box) {
-      const connector = el("line", { class: "leader", x1: x, y1: y, x2: box.x + box.width / 2, y2: box.y + box.height / 2 });
+      const edge = nearestPointOnBox(x, y, box);
+      const connector = el("line", { class: "leader", x1: x, y1: y, x2: edge.x, y2: edge.y });
       svg.appendChild(connector);
-      svg.appendChild(el("rect", { class: "label-card", x: box.x, y: box.y, width: box.width, height: box.height, rx: 8 }));
+      svg.appendChild(el("rect", { class: "label-card", "data-for": point.id, x: box.x, y: box.y, width: box.width, height: box.height, rx: 8 }));
       const name = el("text", { class: "label-name", x: box.x + 12, y: box.y + 18 });
       name.textContent = point.name;
       const code = el("text", { class: "label-code", x: box.x + 12, y: box.y + 35 });
@@ -810,47 +928,27 @@
       const height = 30;
       const mx = (a.x + b.x) / 2;
       const my = (a.y + b.y) / 2;
-      if (routeSelect.value === "client_full") {
-        const manual = [
-          [12, -38],
-          [-76, 58],
-          [-18, -48],
-          [22, 54],
-          [28, 34],
-          [52, 0],
-          [56, 26],
-          [-22, 48],
-          [0, -58],
-          [-46, 42],
-          [0, 46],
-          [-40, -48]
-        ][index] || [0, 42];
-        return {
-          x: Math.max(16, Math.min(1120 - width - 16, mx + manual[0] - width / 2)),
-          y: Math.max(16, Math.min(700 - height - 16, my + manual[1] - height / 2)),
-          width,
-          height
-        };
-      }
       const dx = b.x - a.x;
       const dy = b.y - a.y;
       const len = Math.max(1, Math.hypot(dx, dy));
       const nx = -dy / len;
       const ny = dx / len;
       const sign = index % 2 === 0 ? -1 : 1;
-      const offsets = [64, 96, 128, 160, 196];
+      const offsets = [38, 54, 72, 94, 120, 154, 192, 232];
       const candidates = [];
       for (const distance of offsets) {
         candidates.push({ x: mx + nx * distance * sign - width / 2, y: my + ny * distance * sign - height / 2, width, height });
         candidates.push({ x: mx - nx * distance * sign - width / 2, y: my - ny * distance * sign - height / 2, width, height });
       }
-      candidates.push({ x: mx - width / 2, y: my - 72, width, height });
-      candidates.push({ x: mx - width / 2, y: my + 44, width, height });
-      return chooseClearBox(candidates, { x: mx - width / 2, y: my + (sign < 0 ? -58 : 42), width, height });
+      candidates.push({ x: mx - width / 2, y: my - 54, width, height });
+      candidates.push({ x: mx - width / 2, y: my + 24, width, height });
+      return chooseClearBox(candidates, { x: mx - width / 2, y: my + (sign < 0 ? -54 : 24), width, height });
     }
 
-    function drawDistance(box, text) {
-      svg.appendChild(el("rect", { class: "distance-box", x: box.x, y: box.y, width: box.width, height: box.height, rx: 15 }));
+    function drawDistance(box, text, anchor, index) {
+      const edge = nearestPointOnBox(anchor.x, anchor.y, box);
+      svg.appendChild(el("line", { class: "distance-leader", x1: anchor.x, y1: anchor.y, x2: edge.x, y2: edge.y }));
+      svg.appendChild(el("rect", { class: "distance-box", "data-leg-index": index, x: box.x, y: box.y, width: box.width, height: box.height, rx: 15 }));
       const textNode = el("text", { class: "distance-text", x: box.x + box.width / 2, y: box.y + box.height / 2 });
       textNode.textContent = text;
       svg.appendChild(textNode);
@@ -940,24 +1038,28 @@
         });
         svg.appendChild(p);
       }
+      drawCloseupInset();
 
       const projected = data.pts.map((point, index) => {
         const [x, y] = mercator(point.lon, point.lat, box);
-        const [dx, dy] = visualOffset(point);
-        return { ...point, index, x: x + dx, y: y + dy };
+        return { ...point, index, x, y };
       });
       const routeIds = new Set(data.ids);
       const extra = standalone.filter((id) => !routeIds.has(id)).map((id, index) => {
         const point = { id, ...airports[id] };
         const [x, y] = mercator(point.lon, point.lat, box);
-        const [dx, dy] = visualOffset(point);
-        return { ...point, index: projected.length + index, x: x + dx, y: y + dy };
+        return { ...point, index: projected.length + index, x, y };
       });
-      occupiedBoxes = [];
       const allPoints = [...projected, ...extra];
+      routeSegments = projected.slice(1).map((point, index) => [projected[index], point]);
+      occupiedBoxes = [
+        { x: 750, y: 12, width: 360, height: 184 },
+        ...allPoints.map((point) => ({ x: point.x - 12, y: point.y - 12, width: 24, height: 24 }))
+      ];
       const labelBoxes = new Map();
-      allPoints.forEach((point) => {
-        labelBoxes.set(point.id, labelAnchor(point, point.x, point.y, point.index));
+      const layoutPriority = { moscow: 0, chernoe: 1, dubki: 2, gagarin: 3, saratovCity: 4 };
+      [...allPoints].sort((a, b) => (layoutPriority[a.id] ?? 20) - (layoutPriority[b.id] ?? 20)).forEach((point) => {
+        labelBoxes.set(point.id, labelAnchor(point, point.x, point.y));
       });
 
       const routeD = projected.map((p, i) => (i ? "L" : "M") + p.x.toFixed(1) + "," + p.y.toFixed(1)).join(" ");
@@ -968,10 +1070,10 @@
         const a = projected[index];
         const b = projected[index + 1];
         const text = fmt.format(leg.distance) + " км";
-        distanceBoxes.push({ box: distanceBox(a, b, text, index), text });
+        distanceBoxes.push({ box: distanceBox(a, b, text, index), text, anchor: { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }, index });
       });
 
-      distanceBoxes.forEach(({ box, text }) => drawDistance(box, text));
+      distanceBoxes.forEach(({ box, text, anchor, index }) => drawDistance(box, text, anchor, index));
 
       data.legs.forEach((leg, index) => {
         const a = projected[index];
@@ -986,7 +1088,7 @@
       });
 
       allPoints.forEach((point) => {
-        const group = el("g", { class: "airport " + classFor(point) + (point.id === selectedPoint ? " selected" : ""), tabindex: "0", role: "button", "aria-label": point.name });
+        const group = el("g", { class: "airport " + classFor(point) + (point.id === selectedPoint ? " selected" : ""), "data-point-id": point.id, tabindex: "0", role: "button", "aria-label": point.name });
         const c = el("circle", { cx: point.x, cy: point.y, r: point.id === selectedPoint ? 10 : 7 });
         group.appendChild(c);
         group.addEventListener("click", () => {
