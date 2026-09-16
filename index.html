@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ан-2 RA-01439: маршрут через Сочи и Турцию</title>
+  <title>Ан-2 RA-01439: маршрут через малые аэродромы</title>
   <style>
     :root {
       --ink: #122326;
@@ -497,8 +497,8 @@
   <main class="shell">
     <section class="topbar">
       <div>
-        <h1>Ан-2 RA-01439: маршрут через Сочи и Турцию</h1>
-        <p class="lead">Рабочая карта участка Чёрное — Эрзурум. Километраж рассчитан между аэродромами и не заменяет расчёт КВС.</p>
+        <h1>Ан-2 RA-01439: маршрут через малые аэродромы</h1>
+        <p class="lead">Рабочая карта участка Дубки — Эрзурум. Километраж рассчитан между точками и не заменяет расчёт КВС.</p>
       </div>
       <div class="stamp">Срез 16.09.2026<br>Маршрут в проработке</div>
     </section>
@@ -507,8 +507,8 @@
       <article class="map-card">
         <div class="map-head">
           <div>
-            <h2>Рабочий маршрут через Сочи и Турцию</h2>
-            <p>Показан подтверждаемый участок до Эрзурума; дальнейший маршрут выбирается после разрешений и топлива.</p>
+            <h2>Рабочий маршрут через малые площадки</h2>
+            <p>Бекетовка, Шахты и Северская добавлены для проработки коротких плеч до Сочи.</p>
           </div>
           <div class="legend" aria-label="Легенда">
             <span><i class="dot amber"></i>запасная</span>
@@ -522,7 +522,7 @@
             <desc id="mapDesc">Интерактивная карта вариантов маршрута Ан-2 с названиями аэропортов и расчётными расстояниями между ними.</desc>
           </svg>
         </div>
-        <div class="callout">Казахстанско-узбекский и прежний маршрут Mak Aviation сняты с рабочего рассмотрения. Волгоград, Минеральные Воды, Сочи, Трабзон и Эрзурум требуют отдельных подтверждений приёма Ан-2, топлива и разрешений.</div>
+        <div class="callout">Рабочая линия: Дубки — Бекетовка — Шахты — Северская — Сочи — Трабзон — Эрзурум. Бекетовка и Северская ожидают ответы на запросы; Шахты — резерв. Для Сочи, Трабзона и Эрзурума отдельно подтверждаются топливо, международное оформление и разрешения.</div>
       </article>
 
       <aside>
@@ -530,7 +530,7 @@
           <div class="field">
             <label for="route">Вариант</label>
             <select id="route">
-              <option value="sochi_turkey" selected>Рабочий маршрут: Россия - Сочи - Турция</option>
+              <option value="sochi_turkey" selected>Рабочий маршрут: малые аэродромы - Сочи - Турция</option>
             </select>
           </div>
           <div class="field">
@@ -607,9 +607,10 @@
       kurumoch: proposed("Самара / Курумоч", "UWWW", "Россия", 53.504902, 50.164299),
       atyrau: proposed("Атырау", "UATG", "Казахстан", 47.121318, 51.820343),
       makhachkala: proposed("Махачкала / Уйташ", "URML", "Россия", 42.816799, 47.652302),
-      sochi: { name: "Сочи", code: "URSS", country: "Россия", lat: 43.449902, lon: 39.9566, status: "в процессе", action: "ждём подтверждение приёма Ан-2, топлива и стоимости услуг", fuel: "AVGAS 100LL / АИ-95 не подтверждены" },
-      volgograd: { name: "Волгоград", code: "VOG / URWW", country: "Россия", lat: 48.7825, lon: 44.3455, status: "кандидат", action: "запросить приём Ан-2, топливо и аэропортовые услуги", fuel: "AVGAS 100LL / АИ-95 не подтверждены" },
-      mineralnyeVody: { name: "Минеральные Воды", code: "MRV / URMM", country: "Россия", lat: 44.2251, lon: 43.0819, status: "кандидат", action: "запросить приём Ан-2, топливо и аэропортовые услуги", fuel: "AVGAS 100LL / АИ-95 не подтверждены" },
+      sochi: { name: "Сочи", code: "URSS", country: "Россия", lat: 43.449902, lon: 39.9566, status: "подтверждено", action: "приём и выпуск Ан-2 подтверждены; уточнить топливо, таможню и погранконтроль", fuel: "AVGAS 100LL / АИ-95 не подтверждены" },
+      beketovka: { name: "Бекетовка", code: "XRWB", country: "Россия", lat: 48.5536, lon: 44.3762, status: "запрос направлен", action: "ожидаем ответ по приёму Ан-2, PPR, стоянке, топливу и стоимости", fuel: "AVGAS 100LL / АИ-95 запрошены" },
+      shakhty: { name: "Шахты", code: "нет IATA", country: "Россия", lat: 47.7100, lon: 40.2100, status: "резерв", action: "проверить владельца, PPR, состояние ВПП, стоянку и топливо", fuel: "не подтверждено" },
+      severskaya: { name: "Северская", code: "посадочная площадка", country: "Россия", lat: 44.8600, lon: 38.6800, status: "запрос направлен", action: "ожидаем ответ по приёму Ан-2, PPR, стоянке, топливу и стоимости", fuel: "AVGAS 100LL / АИ-95 запрошены" },
       trabzon: { name: "Трабзон", code: "TZX / LTCG", country: "Турция", lat: 40.9951, lon: 39.7897, status: "кандидат", action: "запросить PPR, приём Ан-2, топливо и порядок международного прилёта", fuel: "AVGAS 100LL / АИ-95 не подтверждены" },
       erzurum: { name: "Эрзурум", code: "ERZ / LTCE", country: "Турция", lat: 39.9565, lon: 41.1702, status: "кандидат", action: "КВС подтвердить горный участок; запросить PPR, топливо и дальнейшее разрешение", fuel: "AVGAS 100LL / АИ-95 не подтверждены" },
       ankara: proposed("Анкара / Эсенбога", "LTAC", "Турция", 40.128101, 32.995098),
@@ -629,7 +630,7 @@
       yangonProposal: proposed("Янгон", "VYYY", "Мьянма", 16.907301, 96.133202),
       chernoe: { name: "Начальная точка", code: "Чёрное / МАРЗ", country: "Россия", lat: 55.75, lon: 38.05, status: "проверить", action: "подтвердить фактический аэродром вылета и остаток топлива перед Дубками", fuel: "остаток и первый участок уточнить" },
       saratovCity: { name: "Саратов", code: "город", country: "Россия", lat: 51.5336, lon: 46.0343, status: "ориентир", action: "городская привязка рядом с Дубками и Гагариным", fuel: "не аэропорт" },
-      dubki: { name: "Дубки", code: "XWSD", country: "Россия", lat: 51.64345, lon: 46.06457, status: "кандидат", action: "приём и выпуск подтверждены; далее короткий перелёт на Гагарин", fuel: "1 000 л AVGAS 100LL подтверждены" },
+      dubki: { name: "Дубки", code: "XWSD", country: "Россия", lat: 51.64345, lon: 46.06457, status: "подтверждено", action: "приём и выпуск подтверждены; начало рабочей линии через малые аэродромы", fuel: "1 000 л AVGAS 100LL подтверждены" },
       gagarin: { name: "Гагарин", code: "GSV / UWSG", country: "Россия", lat: 51.71278, lon: 46.17111, status: "таможня", action: "приём и выпуск подтверждены; таможня, гостиница и выход через Волгоград", fuel: "объём уточняет КВС" },
       aktobe: { name: "Актобе", code: "AKX / UATT", country: "Казахстан", lat: 50.2461, lon: 57.2056, status: "критично", action: "получить официальный ответ по бензину/бочкам/самозаправке", fuel: "AVGAS/АИ-95 не подтверждены" },
       shalkar: { name: "Шалкар", code: "UATR", country: "Казахстан", lat: 47.905, lon: 59.62, status: "резерв", action: "промежуточная посадка только если Актобе - Кызылорда нужно разбить", fuel: "публичного подтверждения бензина нет" },
@@ -650,14 +651,14 @@
     };
 
     const routes = {
-      sochi_turkey: ["chernoe", "dubki", "gagarin", "volgograd", "mineralnyeVody", "sochi", "trabzon", "erzurum"],
+      sochi_turkey: ["dubki", "beketovka", "shakhty", "severskaya", "sochi", "trabzon", "erzurum"],
       western_proposal: ["dobrograd", "krasnyYar", "kurumoch", "atyrau", "makhachkala", "sochi", "ankara", "antalya", "marsaMatruh", "sharm", "alUla", "thumamah", "alAhsa", "doha", "fujairah", "karachi", "ahmedabadProposal", "nagpur", "kolkataProposal", "chattogram", "yangonProposal"],
       client_full: ["chernoe", "dubki", "gagarin", "aktobe", "kyzylorda", "shymkent", "tashkent", "samarkand", "termez", "islamabad", "ahmedabad", "bhubaneswar", "yangon"],
       saratov_direct: ["chernoe", "dubki", "gagarin", "aktobe", "kyzylorda", "shymkent", "tashkent", "samarkand", "termez"],
       saratov_shalkar: ["chernoe", "dubki", "gagarin", "aktobe", "shalkar", "kyzylorda", "shymkent", "tashkent", "samarkand", "termez"]
     };
 
-    const standalone = ["saratovCity"];
+    const standalone = [];
     const fmt = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 0 });
     const svg = document.getElementById("map");
     const routeSelect = document.getElementById("route");
