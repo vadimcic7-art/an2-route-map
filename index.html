@@ -246,6 +246,17 @@
       pointer-events: none;
     }
 
+    .compact-code {
+      fill: var(--ink);
+      font-size: 13px;
+      font-weight: 800;
+      paint-order: stroke;
+      stroke: #fffdf6;
+      stroke-width: 4px;
+      stroke-linejoin: round;
+      pointer-events: none;
+    }
+
     .leader {
       stroke: rgba(18, 35, 38, .35);
       stroke-width: 1.2;
@@ -502,7 +513,7 @@
     @media (max-width: 600px) {
       .map-wrap { min-height: 440px; }
       #map { height: 440px; min-height: 440px; }
-      .label-card, .leader, .label-name, .label-code, .distance-box, .distance-text { display: none; }
+      .label-card, .leader, .label-name, .label-code, .compact-code, .distance-box, .distance-text { display: none; }
       .route { stroke-width: 10; }
       .airport circle { r: 18px; stroke-width: 6; }
       .airport.selected circle { r: 23px; stroke-width: 8; }
@@ -524,8 +535,8 @@
       <article class="map-card">
         <div class="map-head">
           <div>
-            <h2 id="routeTitle">Иранский коридор через Керманшах</h2>
-            <p id="routeSubtitle">Короткий вариант через Казахстан, Туркменистан, Иран и Пакистан.</p>
+            <h2 id="routeTitle">Детальный маршрут через Иран</h2>
+            <p id="routeSubtitle">UUIG → UWWG → UWPP → UWWW → UWSG → URWW → URWA → UATG → UATE → UTAK → UTAM → OICC → OICK → OIZH → OPGW → OPPC → OPOR → OPKC → VAAH → VABO → VABP → VANP → VERP → VEJH → VECC → VGEG → VYTD → VYYY</p>
           </div>
           <div class="legend" aria-label="Легенда">
             <span><i class="dot blue"></i>предложено</span>
@@ -547,8 +558,11 @@
           <div class="field">
             <label for="route">Вариант</label>
             <select id="route">
+              <optgroup label="Новый детальный вариант">
+                <option value="detailed_iran" selected>Основной · 28 точек через Иран</option>
+              </optgroup>
               <optgroup label="Иран">
-                <option value="iran_kermanshah" selected>1А · через Керманшах</option>
+                <option value="iran_kermanshah">1А · через Керманшах</option>
                 <option value="iran_isfahan">1Б · южнее через Исфахан</option>
               </optgroup>
               <optgroup label="Каспий и Азербайджан">
@@ -641,13 +655,21 @@
 
     const airports = {
       dobrograd: proposed("Доброград", "UUIG", "Россия", 56.23865, 41.24114),
+      bezymyanka: proposed("Самара / Безымянка", "UWWG", "Россия", 53.2200, 50.3250),
+      penza: { name: "Пенза", code: "PEZ / UWPP (в сообщении UWWP)", mapCode: "UWPP?", country: "Россия", lat: 53.1106, lon: 45.0211, status: "код проверить", action: "подтвердить, что имеется в виду Пенза UWPP; проверить приём Ан-2, топливо и режим работы", fuel: "не подтверждено" },
       krasnyYar: proposed("Красный Яр", "UWWQ", "Россия", 53.5084, 50.4395),
       kurumoch: proposed("Самара / Курумоч", "UWWW", "Россия", 53.504902, 50.164299),
       atyrau: proposed("Атырау", "UATG", "Казахстан", 47.121318, 51.820343),
-      aktau: proposed("Актау", "SCO / UTAK", "Казахстан", 43.8601, 51.0919),
+      aktau: proposed("Актау", "SCO / UATE", "Казахстан", 43.8601, 51.0919),
+      turkmenbashi: proposed("Туркменбаши", "KRW / UTAK", "Туркменистан", 40.0633, 53.0072),
+      mary: proposed("Мары", "MYP / UTAM", "Туркменистан", 37.6194, 61.8967),
       kermanshah: proposed("Керманшах", "KSH / OICC", "Иран", 34.3459, 47.1581),
+      kerman: proposed("Керман", "KER / OICK", "Иран", 30.2744, 56.9511),
       isfahan: proposed("Исфахан", "IFN / OIFM", "Иран", 32.7508, 51.8613),
       zahedan: proposed("Захедан", "ZAH / OIZH", "Иран", 29.4757, 60.9062),
+      gwadar: { name: "Гвадар", code: "OPGW (в сообщении OPGD)", mapCode: "OPGW?", country: "Пакистан", lat: 25.9864, lon: 62.5060, status: "код проверить", action: "OPGD удалён из AIP; подтвердить использование нового аэропорта Гвадар OPGW, приём Ан-2 и топливо", fuel: "не подтверждено" },
+      parachinar: { name: "Парачинар", code: "PAJ / OPPC", mapCode: "OPPC?", country: "Пакистан", lat: 33.9021, lon: 70.0716, status: "маршрут проверить", action: "OPPC означает Парачинар и создаёт возврат на север; если подразумевался Панджгур, проверить код OPPG", fuel: "не подтверждено" },
+      ormara: proposed("Ормара", "ORW / OPOR", "Пакистан", 25.2747, 64.5860),
       astrakhan: proposed("Астрахань", "ASF / URWA", "Россия", 46.2833, 48.0063),
       baku: proposed("Баку", "GYD / UBBB", "Азербайджан", 40.4675, 50.0467),
       tabriz: proposed("Тебриз", "TBZ / OITR", "Иран", 38.1339, 46.2350),
@@ -691,9 +713,14 @@
       fujairah: proposed("Фуджейра", "OMFJ", "ОАЭ", 25.108411, 56.328061),
       karachi: proposed("Карачи", "OPKC", "Пакистан", 24.9065, 67.160797),
       ahmedabadProposal: proposed("Ахмедабад", "VAAH", "Индия", 23.0772, 72.634697),
+      vadodara: proposed("Вадодара", "BDQ / VABO", "Индия", 22.3362, 73.2263),
+      bhopal: proposed("Бхопал", "BHO / VABP", "Индия", 23.2875, 77.3374),
       nagpur: proposed("Нагпур", "VANP", "Индия", 21.092199, 79.047203),
+      raipur: proposed("Райпур", "RPR / VERP", "Индия", 21.1804, 81.7388),
+      jharsuguda: proposed("Джхарсугуда", "JRG / VEJH", "Индия", 21.9135, 84.0504),
       kolkataProposal: proposed("Колката", "VECC", "Индия", 22.654012, 88.44765),
       chattogram: proposed("Чаттограм", "VGEG", "Бангладеш", 22.249599, 91.813301),
+      thandwe: { name: "Тандве", code: "SNW / VYTD", country: "Мьянма", lat: 18.4607, lon: 94.3001, status: "критично", action: "проверить текущий статус, безопасность, PPR и возможность технической посадки; опубликованный AIP указывает отсутствие заправки", fuel: "по опубликованному AIP: нет" },
       yangonProposal: proposed("Янгон", "VYYY", "Мьянма", 16.907301, 96.133202),
       chernoe: { name: "Начальная точка", code: "Чёрное / МАРЗ", country: "Россия", lat: 55.75, lon: 38.05, status: "проверить", action: "подтвердить фактический аэродром вылета и остаток топлива перед Дубками", fuel: "остаток и первый участок уточнить" },
       saratovCity: { name: "Саратов", code: "город", country: "Россия", lat: 51.5336, lon: 46.0343, status: "ориентир", action: "городская привязка рядом с Дубками и Гагариным", fuel: "не аэропорт" },
@@ -719,8 +746,9 @@
 
     const indiaToYangon = ["karachi", "ahmedabadProposal", "yangonProposal"];
     const routes = {
-      iran_kermanshah: ["dobrograd", "atyrau", "aktau", "kermanshah", "zahedan", ...indiaToYangon],
-      iran_isfahan: ["dobrograd", "atyrau", "aktau", "isfahan", "zahedan", ...indiaToYangon],
+      detailed_iran: ["dobrograd", "bezymyanka", "penza", "kurumoch", "gagarin", "volgograd", "astrakhan", "atyrau", "aktau", "turkmenbashi", "mary", "kermanshah", "kerman", "zahedan", "gwadar", "parachinar", "ormara", "karachi", "ahmedabadProposal", "vadodara", "bhopal", "nagpur", "raipur", "jharsuguda", "kolkataProposal", "chattogram", "thandwe", "yangonProposal"],
+      iran_kermanshah: ["dobrograd", "atyrau", "turkmenbashi", "kermanshah", "zahedan", ...indiaToYangon],
+      iran_isfahan: ["dobrograd", "atyrau", "turkmenbashi", "isfahan", "zahedan", ...indiaToYangon],
       caspian_astrakhan: ["dobrograd", "kurumoch", "astrakhan", "baku", "tabriz", "zahedan", ...indiaToYangon],
       caspian_grozny: ["dobrograd", "volgograd", "grozny", "baku", "tabriz", "zahedan", ...indiaToYangon],
       caspian_kalmykia: ["dobrograd", "volgograd", "elista", "astrakhan", "baku", "tabriz", "zahedan", ...indiaToYangon],
@@ -734,6 +762,11 @@
     };
 
     const routeMeta = {
+      detailed_iran: {
+        title: "Детальный маршрут через Иран",
+        subtitle: "UUIG → UWWG → UWPP? → UWWW → UWSG → URWW → URWA → UATG → UATE → UTAK → UTAM → OICC → OICK → OIZH → OPGW? → OPPC? → OPOR → OPKC → VAAH → VABO → VABP → VANP → VERP → VEJH → VECC → VGEG → VYTD → VYYY",
+        note: "Маршрут нанесён подробно. До рассылки исправить или подтвердить три позиции: UWWP вероятно означает Пензу UWPP; OPGD удалён из AIP и заменён новым Гвадаром OPGW; OPPC — Парачинар и создаёт возврат на север, тогда как Панджгур имеет код OPPG."
+      },
       iran_kermanshah: {
         title: "Иранский коридор через Керманшах",
         subtitle: "UUIG → UATG → UTAK → OICC → OIZH → OPKC → VAAH → VYYY",
@@ -889,6 +922,7 @@
     }
 
     function labelBoxWidth(point) {
+      if (routeSelect.value === "detailed_iran") return 68;
       return Math.max(92, Math.min(186, point.name.length * 8 + 38));
     }
 
@@ -948,7 +982,7 @@
         kolkata: [-150, -74]
       }[point.id] || [index % 2 ? -132 : 24, index % 3 ? -72 : 30];
       const width = labelBoxWidth(point);
-      const height = 44;
+      const height = routeSelect.value === "detailed_iran" ? 28 : 44;
       const offsets = [
         manual,
         [24, -112],
@@ -968,6 +1002,14 @@
       const connector = el("line", { class: "leader", x1: x, y1: y, x2: box.x + box.width / 2, y2: box.y + box.height / 2 });
       svg.appendChild(connector);
       svg.appendChild(el("rect", { class: "label-card", x: box.x, y: box.y, width: box.width, height: box.height, rx: 8 }));
+      if (routeSelect.value === "detailed_iran") {
+        const matches = point.code.match(/[A-Z]{4}/g);
+        const compactCode = point.mapCode || (matches ? matches[matches.length - 1] : point.code);
+        const codeOnly = el("text", { class: "compact-code", x: box.x + box.width / 2, y: box.y + 19, "text-anchor": "middle" });
+        codeOnly.textContent = compactCode;
+        svg.appendChild(codeOnly);
+        return;
+      }
       const name = el("text", { class: "label-name", x: box.x + 12, y: box.y + 18 });
       name.textContent = point.name;
       const code = el("text", { class: "label-code", x: box.x + 12, y: box.y + 35 });
@@ -1154,6 +1196,7 @@
 
       const distanceBoxes = [];
       data.legs.forEach((leg, index) => {
+        if (routeSelect.value === "detailed_iran" && leg.distance <= 800) return;
         const a = projected[index];
         const b = projected[index + 1];
         const text = fmt.format(leg.distance) + " км";
